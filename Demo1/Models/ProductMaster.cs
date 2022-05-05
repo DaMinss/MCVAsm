@@ -36,6 +36,7 @@ namespace Demo1.Models
         }
         public DbSet<ProductMaster> ProductMasters { get; set; }
 
+        //not sure what this does. Uncomment if you wanna mess with it.
         /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductMaster>()

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Demo1.CustomFilters;
@@ -25,7 +27,6 @@ namespace Demo1.Controllers
             return View(Products);
         }
         [AuthLog(Roles = "Admin")]
-        //used for calling the create view (i think)
         public ActionResult Create()
         {
             var Product = new ProductMaster();
@@ -33,12 +34,49 @@ namespace Demo1.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [AuthLog(Roles = "Admin")]
         public ActionResult Create(ProductMaster p)
         {
             ctx.ProductMasters.Add(p);
             ctx.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        //edit button here
+        //edit validation
+        [AuthLog(Roles = "Admin")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            using (var ctx = new ProductDbContext())
+            {
+                var Product = ctx.ProductMasters.Find(id);
+                //find(id) will return null value if it can't find the requested if in the database
+                if (Product == null)
+                {
+                    //return user to index page if the id is invalid.
+                    return RedirectToAction("Index");
+                }
+                return View(Product);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AuthLog(Roles = "Admin")]
+        public ActionResult Edit([Bind(Include = "BookId,BookName,BookCategory,BookPrice")] ProductMaster p)
+        {
+            if (ModelState.IsValid)
+            {
+                ctx.Entry(p).State = EntityState.Modified;
+                ctx.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View("Index");
         }
 
         [HttpGet]
@@ -52,13 +90,13 @@ namespace Demo1.Controllers
             }
             using(var ctx = new ProductDbContext())
             {
-                var product = ctx.ProductMasters.Find(id);
+                var Product = ctx.ProductMasters.Find(id);
                 //find(id) will return null value if it can't find the requested if in the database
-                if (product == null){
+                if (Product == null){
                     //return user to index page if the id is invalid.
                     return RedirectToAction("Index");
                 }
-                ctx.ProductMasters.Remove(product);
+                ctx.ProductMasters.Remove(Product);
                 ctx.SaveChanges();
                 return RedirectToAction("Index");
             }
