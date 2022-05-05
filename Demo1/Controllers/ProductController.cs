@@ -25,6 +25,7 @@ namespace Demo1.Controllers
             return View(Products);
         }
         [AuthLog(Roles = "Admin")]
+        //used for calling the create view (i think)
         public ActionResult Create()
         {
             var Product = new ProductMaster();
@@ -39,6 +40,30 @@ namespace Demo1.Controllers
             ctx.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        [AuthLog(Roles = "Admin")]
+        public ActionResult Delete(int? id)
+        {
+            //validate if id is correct
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            using(var ctx = new ProductDbContext())
+            {
+                var product = ctx.ProductMasters.Find(id);
+                //find(id) will return null value if it can't find the requested if in the database
+                if (product == null){
+                    //return user to index page if the id is invalid.
+                    return RedirectToAction("Index");
+                }
+                ctx.ProductMasters.Remove(product);
+                ctx.SaveChanges();
+                return RedirectToAction("Index");
+            }
+        }
+
 
         [AuthLog(Roles = "Sales manager")]
         public ActionResult SaleProduct()

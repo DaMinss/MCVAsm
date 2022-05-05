@@ -36,7 +36,7 @@ namespace Demo1.Models
         }
         public DbSet<ProductMaster> ProductMasters { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductMaster>()
                 .Property(e => e.BookName)
@@ -45,6 +45,6 @@ namespace Demo1.Models
             modelBuilder.Entity<ProductMaster>()
                 .Property(e => e.BookCategory)
                 .IsFixedLength();
-        }
+        }*/
     }
 }
