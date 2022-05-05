@@ -174,7 +174,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\ProductMastersController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="CustomFilters\AuthLogAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -248,11 +247,6 @@
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Shared\AuthorizeFailed.cshtml" />
-    <Content Include="Views\ProductMasters\Create.cshtml" />
-    <Content Include="Views\ProductMasters\Delete.cshtml" />
-    <Content Include="Views\ProductMasters\Details.cshtml" />
-    <Content Include="Views\ProductMasters\Edit.cshtml" />
-    <Content Include="Views\ProductMasters\Index.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
