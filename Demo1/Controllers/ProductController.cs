@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.IO;
 using System.Web.Mvc;
 using Demo1.CustomFilters;
 using Demo1.Models;
@@ -38,6 +39,14 @@ namespace Demo1.Controllers
         [AuthLog(Roles = "Admin")]
         public ActionResult Create(ProductMaster p)
         {
+            if (p.ImageUpload != null)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(p.ImageUpload.FileName);
+                string extension = Path.GetExtension(p.ImageUpload.FileName);
+                fileName = fileName + extension;
+                p.Image = "~/Content/Image/" + fileName;
+                p.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Image/"), fileName));
+            }
             ctx.ProductMasters.Add(p);
             ctx.SaveChanges();
             return RedirectToAction("Index");

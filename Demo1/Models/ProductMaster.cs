@@ -6,10 +6,15 @@ namespace Demo1.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity;
     using System.Data.Entity.Spatial;
+    using System.Web;
 
     [Table("ProductMaster")]
     public partial class ProductMaster
-    {
+    {        
+        public ProductMaster()
+        {
+            Image = "~/Content/Image/add.png";
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int BookId { get; set; }
@@ -21,6 +26,10 @@ namespace Demo1.Models
         public string BookCategory { get; set; }
 
         public double? BookPrice { get; set; }
+
+        public string Image { get; set; }
+        [NotMapped]
+        public HttpPostedFileBase ImageUpload { get; set; }
     }
     
     public class ProductDbContext : DbContext
