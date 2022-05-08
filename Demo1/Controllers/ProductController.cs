@@ -9,10 +9,13 @@ using System.Web.Mvc;
 using Demo1.CustomFilters;
 using Demo1.Models;
 
+
 namespace Demo1.Controllers
 {
     public class ProductController : Controller
     {
+        ProductDbContext db = new ProductDbContext();
+
         ProductDbContext ctx;
         public ProductController()
         {
@@ -22,11 +25,12 @@ namespace Demo1.Controllers
         // GET: Product
        
         [AuthLog(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
-            var Products = ctx.ProductMasters.ToList();
-            return View(Products);
+                return View(db.ProductMasters.Where(x => x.BookName.Contains(search) || search == null).ToList());
+           
         }
+
         [AuthLog(Roles = "Admin")]
         public ActionResult Create()
         {
