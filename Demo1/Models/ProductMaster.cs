@@ -13,6 +13,7 @@ namespace Demo1.Models
     {        
         public ProductMaster()
         {
+            //initialize default item image
             Image = "~/Content/Image/add.png";
         }
         [Key]

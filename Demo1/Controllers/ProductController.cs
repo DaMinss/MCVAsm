@@ -111,6 +111,25 @@ namespace Demo1.Controllers
             }
         }
 
+        [AuthLog(Roles = "Admin")]
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            using (var ctx = new ProductDbContext())
+            {
+                var Product = ctx.ProductMasters.Find(id);
+                //find(id) will return null value if it can't find the requested if in the database
+                if (Product == null)
+                {
+                    //return user to index page if the id is invalid.
+                    return RedirectToAction("Index");
+                }
+                return View(Product);
+            }
+        }
 
         [AuthLog(Roles = "Sales manager")]
         public ActionResult SaleProduct()
