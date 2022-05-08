@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -77,15 +78,19 @@ namespace Demo1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthLog(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "BookId,BookName,BookCategory,BookPrice")] ProductMaster p)
+        public ActionResult Edit(int? id, ProductMaster p)
         {
-            if (ModelState.IsValid)
-            {
+                if (p.ImageUpload != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(p.ImageUpload.FileName);
+                    string extension = Path.GetExtension(p.ImageUpload.FileName);
+                    fileName = fileName + extension;
+                    p.Image = "~/Content/Image/" + fileName;
+                    p.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Image/"), fileName));
+                }
                 ctx.Entry(p).State = EntityState.Modified;
                 ctx.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            return View("Index");
         }
 
         [HttpGet]
