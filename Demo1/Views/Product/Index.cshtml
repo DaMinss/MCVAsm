@@ -1,49 +1,51 @@
 ﻿@model IEnumerable<Demo1.Models.ProductMaster>
 
-@{
-    ViewBag.Title = "Index";
-}
+@{ ViewBag.Title = "Index"; }
 <h2>Book list</h2>
 
 @using (Html.BeginForm("Index", "Product", FormMethod.Get))
 {
-    @Html.TextBox("search")<input type="submit" value="Search" />
-   
- }
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Book name</th>
-                <th>Book Category</th>
-                <th>Book Price</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.BookName
-                </td>
-                <td>
-                    @item.BookCategory
-                </td>
-                <td>
-                    @item.BookPrice
-                </td>
-                <td>
-                    @item.Image
-                </td>
-                <td>
-                    <img src="@Url.Content(item.Image)" style="height:200px; width:200px; margin:10px;" id="previewImage" />
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.BookId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.BookId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BookId }, new { onclick = "return confirm('Are you sure you wish to delete this book?');" })
-                </td>
-            </tr>
-        }
-            </tbody>
+@Html.TextBox("search")
+ <input type="submit" value="Search" />}
+<table class="table">
+    <tr>
+        <th>
+            Book Name
+        </th>
+        <th>
+            Book Category
+        </th>
+        <th>
+            Book Price
+        </th>
+        <th>
+            Image
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
 
-    </table>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @item.BookName
+    </td>
+    <td>
+        @item.BookCategory
+    </td>
+    <td>
+        @item.BookPrice
+    </td>
+    <td>
+        <img src="@Url.Content(item.Image)" style="height:200px; width:200px; margin:10px;" id="previewImage" />
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.BookId }) |
+        @Html.ActionLink("Details", "Details", new { id = item.BookId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.BookId }, new { onclick = "return confirm('Are you sure you wish to delete this book?');" })
+    </td>
+</tr>}
+
+</table>
