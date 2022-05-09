@@ -39,8 +39,7 @@ namespace Demo1.Controllers
         {
 
             var Product = new ProductMaster();
-            List<ProductMaster> CatList = db.ProductMasters.ToList();
-            ViewBag.CategoriesList = new SelectList(CatList, "CategoryID", "Name");
+            
             return View(Product);
         }
 

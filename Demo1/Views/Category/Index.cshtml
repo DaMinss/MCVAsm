@@ -5,8 +5,9 @@
 
 @using (Html.BeginForm("Index", "Category", FormMethod.Get))
 {
-@Html.TextBox("search")
- <input type="submit" value="Search" />}
+    @Html.TextBox("search")
+    <input type="submit" value="Search" />
+}
 <table class="table">
     <tr>
         <th>
@@ -22,22 +23,23 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @item.CategoryID
-    </td>
-    <td>
-        @item.CategoryName
-    </td>
-    <td>
-        @item.CategoryDescription
-    </td>
-   
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.CategoryID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID }, new { onclick = "return confirm('Are you sure you wish to delete this book?');" })
-    </td>
-</tr>}
+        <tr>
+            <td>
+                @item.CategoryID
+            </td>
+            <td>
+                @item.CategoryName
+            </td>
+            <td>
+                @item.CategoryDescription
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID }, new { onclick = "return confirm('Are you sure you wish to delete this book?');" })
+            </td>
+        </tr>
+}
 
 </table>
+@Html.ActionLink("New Category", "Create", "Category")
