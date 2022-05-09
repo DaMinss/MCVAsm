@@ -269,6 +269,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Cart\" />
+    <Folder Include="Views\ProductList\" />
     <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>

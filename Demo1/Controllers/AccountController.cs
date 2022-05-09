@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Demo1.CustomFilters;
 using Demo1.Models;
 
 namespace Demo1.Controllers
@@ -142,10 +143,13 @@ namespace Demo1.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
+
         public ActionResult Register()
         {
-            ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
-            return View();
+           
+                ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
+                return View();
+            
         }
 
         //
@@ -178,6 +182,9 @@ namespace Demo1.Controllers
             return View(model);
         }
 
+  
+
+        
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

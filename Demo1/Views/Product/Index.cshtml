@@ -5,18 +5,28 @@
 
 @using (Html.BeginForm("Index", "Product", FormMethod.Get))
 {
-@Html.TextBox("search")
- <input type="submit" value="Search" />}
+    @Html.TextBox("search")
+    <input type="submit" value="Search" />
+}
 <table class="table">
     <tr>
         <th>
             Book Name
         </th>
         <th>
-            Book Category
+            Publisher
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Category ID
         </th>
         <th>
             Book Price
+        </th>
+        <th>
+            Book Quantity
         </th>
         <th>
             Image
@@ -28,24 +38,35 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @item.BookName
-    </td>
-    <td>
-        @item.CategoryID
-    </td>
-    <td>
-        @item.BookPrice
-    </td>
-    <td>
-        <img src="@Url.Content(item.Image)" style="height:200px; width:200px; margin:10px;" id="previewImage" />
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.BookId }) |
-        @Html.ActionLink("Details", "Details", new { id = item.BookId }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.BookId }, new { onclick = "return confirm('Are you sure you wish to delete this book?');" })
-    </td>
-</tr>}
+        <tr>
+            <td>
+                @item.BookName
+            </td>
+            <td>
+                @item.Publisher
+            </td>
+            <td>
+                @item.Description
+            </td>
+            <td>
+                @item.CategoryID
+            </td>
+            <td>
+                @item.BookPrice
+            </td>
+            <td>
+                @item.BookQuantity
+            </td>
+            <td>
+                <img src="@Url.Content(item.Image)" style="height:200px; width:200px; margin:10px;" id="previewImage" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BookId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BookId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BookId }, new { onclick = "return confirm('Are you sure you wish to delete this book?');" })
+            </td>
+        </tr>
+}
 
 </table>
+@Html.ActionLink("New Product", "Create", "Product") 

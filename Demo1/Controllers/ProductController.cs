@@ -16,8 +16,6 @@ namespace Demo1.Controllers
     public class ProductController : Controller
     {
         ProductDbContext db = new ProductDbContext();
-        
-
 
         ProductDbContext ctx;
         public ProductController()
@@ -39,7 +37,6 @@ namespace Demo1.Controllers
         {
 
             var Product = new ProductMaster();
-            
             return View(Product);
         }
 
@@ -48,28 +45,20 @@ namespace Demo1.Controllers
         [AuthLog(Roles = "Admin")]
         public ActionResult Create(ProductMaster p)
         {
-
-            if (ModelState.IsValid)
+            if (p.ImageUpload != null)
             {
-                
-                if (p.ImageUpload != null)
-                {
-                    string fileName = Path.GetFileNameWithoutExtension(p.ImageUpload.FileName);
-                    string extension = Path.GetExtension(p.ImageUpload.FileName);
-                    fileName = fileName + extension;
-                    p.Image = "~/Content/Image/" + fileName;
-                    p.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Image/"), fileName));
-                }
-                return View(p);
-
+                string fileName = Path.GetFileNameWithoutExtension(p.ImageUpload.FileName);
+                string extension = Path.GetExtension(p.ImageUpload.FileName);
+                fileName = fileName + extension;
+                p.Image = "~/Content/Image/" + fileName;
+                p.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Image/"), fileName));
             }
-
-            // If we got this far, something failed, redisplay form
-            
             ctx.ProductMasters.Add(p);
             ctx.SaveChanges();
             return RedirectToAction("Index");
         }
+
+    
 
         //edit button here
         //edit validation
@@ -78,25 +67,22 @@ namespace Demo1.Controllers
         [AuthLog(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
-            CategoryDbcontext db = new CategoryDbcontext();
-            List<Category> CatList = db.Category.ToList();
-            ViewBag.Category = new SelectList(db.Category.ToList(), "CategoryID", "CategoryName");
-            if (id == null)
+        if (id == null)
+        {
+            return RedirectToAction("Index");
+        }
+        using (var ctx = new ProductDbContext())
+        {
+            var Product = ctx.ProductMasters.Find(id);
+            //find(id) will return null value if it can't find the requested if in the database
+            if (Product == null)
             {
+                //return user to index page if the id is invalid.
                 return RedirectToAction("Index");
             }
-            using (var ctx = new ProductDbContext())
-            {
-                var Product = ctx.ProductMasters.Find(id);
-                //find(id) will return null value if it can't find the requested if in the database
-                if (Product == null)
-                {
-                    //return user to index page if the id is invalid.
-                    return RedirectToAction("Index");
-                }
-                return View(Product);
-            }
+            return View(Product);
         }
+    }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
