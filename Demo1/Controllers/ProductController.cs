@@ -15,6 +15,7 @@ namespace Demo1.Controllers
     public class ProductController : Controller
     {
         ProductDbContext db = new ProductDbContext();
+        
 
         ProductDbContext ctx;
         public ProductController()
@@ -34,8 +35,8 @@ namespace Demo1.Controllers
         [AuthLog(Roles = "Admin")]
         public ActionResult Create()
         {
-            var Product = new ProductMaster();
-            return View(Product);
+            ViewBag.Name = new SelectList(ctx.ProductMasters.ToList(), "category", "category");
+            return View();
         }
 
         [HttpPost]
@@ -51,6 +52,13 @@ namespace Demo1.Controllers
                 p.Image = "~/Content/Image/" + fileName;
                 p.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Image/"), fileName));
             }
+            if (ModelState.IsValid)
+            {
+                return View(p);
+            }
+
+            // If we got this far, something failed, redisplay form
+            
             ctx.ProductMasters.Add(p);
             ctx.SaveChanges();
             return RedirectToAction("Index");

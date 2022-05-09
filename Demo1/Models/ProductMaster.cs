@@ -16,17 +16,23 @@ namespace Demo1.Models
             Image = "~/Content/Image/add.png";
         }
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+       
         public int BookId { get; set; }
 
         [StringLength(50)]
         public string BookName { get; set; }
 
         [StringLength(50)]
-        public string BookCategory { get; set; }
+        public string Publisher { get; set; }
+        public string Description { get; set; }
 
+       
+        public int CategoryID { get; set; }
+        [ForeignKey("CategoryID")]
+        public Category category { get; set; }
+       
         public double? BookPrice { get; set; }
-
+        public double? BookQuantity { get; set; }
         public string Image { get; set; }
         [NotMapped]
         public HttpPostedFileBase ImageUpload { get; set; }
