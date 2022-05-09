@@ -10,12 +10,14 @@ using Demo1.CustomFilters;
 using Demo1.Models;
 
 
+
 namespace Demo1.Controllers
 {
     public class ProductController : Controller
     {
         ProductDbContext db = new ProductDbContext();
         
+
 
         ProductDbContext ctx;
         public ProductController()
@@ -35,8 +37,11 @@ namespace Demo1.Controllers
         [AuthLog(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.Name = new SelectList(ctx.ProductMasters.ToList(), "category", "category");
-            return View();
+
+            var Product = new ProductMaster();
+            List<ProductMaster> CatList = db.ProductMasters.ToList();
+            ViewBag.CategoriesList = new SelectList(CatList, "CategoryID", "Name");
+            return View(Product);
         }
 
         [HttpPost]
@@ -44,17 +49,20 @@ namespace Demo1.Controllers
         [AuthLog(Roles = "Admin")]
         public ActionResult Create(ProductMaster p)
         {
-            if (p.ImageUpload != null)
-            {
-                string fileName = Path.GetFileNameWithoutExtension(p.ImageUpload.FileName);
-                string extension = Path.GetExtension(p.ImageUpload.FileName);
-                fileName = fileName + extension;
-                p.Image = "~/Content/Image/" + fileName;
-                p.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Image/"), fileName));
-            }
+
             if (ModelState.IsValid)
             {
+                
+                if (p.ImageUpload != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(p.ImageUpload.FileName);
+                    string extension = Path.GetExtension(p.ImageUpload.FileName);
+                    fileName = fileName + extension;
+                    p.Image = "~/Content/Image/" + fileName;
+                    p.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Image/"), fileName));
+                }
                 return View(p);
+
             }
 
             // If we got this far, something failed, redisplay form
@@ -71,6 +79,9 @@ namespace Demo1.Controllers
         [AuthLog(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
+            CategoryDbcontext db = new CategoryDbcontext();
+            List<Category> CatList = db.Category.ToList();
+            ViewBag.Category = new SelectList(db.Category.ToList(), "CategoryID", "CategoryName");
             if (id == null)
             {
                 return RedirectToAction("Index");

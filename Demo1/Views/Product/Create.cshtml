@@ -39,9 +39,11 @@
     </div>
 
     <div class="form-group">
-        @Html.Label("Select Your Category", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownList("category", (IEnumerable<SelectListItem>)(@ViewBag.category), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.CategoryID, ViewBag.CategoriesList as SelectList,
+                       "Select Category", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+
         </div>
     </div>
     <div class="form-group">
@@ -51,6 +53,7 @@
             @Html.ValidationMessageFor(model => model.BookPrice, "", new { @class = "text-danger" })
         </div>
     </div>
+
     <div class="form-group">
         @Html.LabelFor(model => model.BookQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -58,7 +61,6 @@
             @Html.ValidationMessageFor(model => model.BookPrice, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">

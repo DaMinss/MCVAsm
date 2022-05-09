@@ -30,9 +30,13 @@ namespace Demo1.Models
         public int CategoryID { get; set; }
         [ForeignKey("CategoryID")]
         public Category category { get; set; }
+
        
+
+
         public double? BookPrice { get; set; }
         public double? BookQuantity { get; set; }
+       
         public string Image { get; set; }
         [NotMapped]
         public HttpPostedFileBase ImageUpload { get; set; }
