@@ -24,12 +24,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                   
-                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("View Book", "IndexUser", "Product")</li>
+                    <!--Navbar for user-->
+                    @*@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                    {
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("View Book", "IndexUser", "Product")</li>
+                    }*@
+
                     <!--Show links based on authorization-->
-                    @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("Sales manager"))
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Role", "Index", "Role")</li>
                         <li>@Html.ActionLink("View Book", "Index", "Product")</li>
@@ -37,7 +41,10 @@
                         <li>@Html.ActionLink("Sale Product", "SaleProduct", "Product")</li>
                         <li>@Html.ActionLink("Register New Account", "RegisterAdmin", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
 
-                    }
+                    } else {
+                    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("View Book", "IndexUser", "Product")</li>}
 
 
                 </ul>
