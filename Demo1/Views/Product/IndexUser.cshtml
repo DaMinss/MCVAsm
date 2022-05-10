@@ -13,15 +13,15 @@
             <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
         </div>
     </div>
-    <div class="wrap">
+    <div class="wrap" style="text-align:center;">
         <div class="search">
             @using (Html.BeginForm("IndexUser", "Product", FormMethod.Get))
             {
                 @Html.TextBox("search")
 
-                <input type="text" value="Search" class="searchTerm" placeholder="What are you looking for?">
+                
                 <button type="submit" value="Search" class="searchButton">
-                    <i class="fa fa-search"></i>
+                    Search
                 </button>
             }
         </div>
@@ -29,7 +29,7 @@
 </header>
 <!-- Section-->
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
+    <div class="container px-4 px-lg-5 mt-5" style="margin-top:5%;">
         
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
            
@@ -47,7 +47,7 @@
                         <div class="panel-body text-center">
                             <h4>
                                 <a href="#" class="pro-title">
-                                    @item.BookName;
+                                    @item.BookName
                                 </a>
                             </h4>
                             <p class="price">$@item.BookPrice</p>
