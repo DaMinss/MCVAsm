@@ -32,6 +32,13 @@ namespace Demo1.Controllers
            
         }
 
+        [AllowAnonymous]
+        public ActionResult IndexUser(string search)
+        {
+            return View(db.ProductMasters.Where(x => x.BookName.Contains(search) || search == null).ToList());
+
+        }
+
         [AuthLog(Roles = "Admin")]
         public ActionResult Create()
         {

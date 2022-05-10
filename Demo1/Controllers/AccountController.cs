@@ -142,11 +142,12 @@ namespace Demo1.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
 
-        public ActionResult Register()
+        [AuthLog(Roles = "Admin")]
+        public ActionResult RegisterAdmin()
         {
            
+                
                 ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
                 return View();
             
@@ -155,9 +156,9 @@ namespace Demo1.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [AuthLog(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model) 
+        public async Task<ActionResult> RegisterAdmin(RegisterViewModel model) 
         {
             if (ModelState.IsValid)
             {
@@ -182,9 +183,50 @@ namespace Demo1.Controllers
             return View(model);
         }
 
-  
+        //User register
 
+        [AllowAnonymous]
+        public ActionResult Register()
+        {
+
+
+            ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
+            return View();
+
+        }
+
+        //
+        // POST: /Account/Register
+        [HttpPost]
         
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    //Assign Role to user Here 
+                    await this.UserManager.AddToRoleAsync(user.Id, model.Name);
+                    //Ends Here
+
+
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    return RedirectToAction("Index", "Home");
+
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

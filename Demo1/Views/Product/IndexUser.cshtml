@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Demo1.Models.ProductMaster>
+
+@{ ViewBag.Title = "IndexUser"; }
+
+
+
+
+<!-- Header-->
+<header class="bg-dark py-5" style="margin-top:50px;">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Shop in style</h1>
+            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+        </div>
+    </div>
+    <div class="wrap">
+        <div class="search">
+            @using (Html.BeginForm("IndexUser", "Product", FormMethod.Get))
+            {
+                @Html.TextBox("search")
+
+                <input type="text" value="Search" class="searchTerm" placeholder="What are you looking for?">
+                <button type="submit" value="Search" class="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            }
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+           
+            @foreach (var item in Model)
+            {
+                @*<div id="ok">*@
+
+                <div class="col-md-3" style="text-align:center;">
+                    <section class="panel">
+                        <div class="pro-img-box">
+                            <img src="@Url.Content(item.Image)" style="height:300px; width:260px; margin:auto;" id="previewImage" />
+
+                        </div>
+
+                        <div class="panel-body text-center">
+                            <h4>
+                                <a href="#" class="pro-title">
+                                    @item.BookName;
+                                </a>
+                            </h4>
+                            <p class="price">$@item.BookPrice</p>
+                        </div>
+                        <button href="#" class="adtocart">
+                            Add To Cart
+                        </button>
+                    </section>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</section>
