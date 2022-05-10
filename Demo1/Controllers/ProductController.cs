@@ -35,7 +35,8 @@ namespace Demo1.Controllers
         [AuthLog(Roles = "Admin")]
         public ActionResult Create()
         {
-
+            CategoryDbcontext db1 = new CategoryDbcontext();
+            ViewBag.CatList = new SelectList(db1.Category.ToList(), "CategoryID", "CategoryName");
             var Product = new ProductMaster();
             return View(Product);
         }
@@ -45,6 +46,7 @@ namespace Demo1.Controllers
         [AuthLog(Roles = "Admin")]
         public ActionResult Create(ProductMaster p)
         {
+
             if (p.ImageUpload != null)
             {
                 string fileName = Path.GetFileNameWithoutExtension(p.ImageUpload.FileName);
@@ -52,7 +54,11 @@ namespace Demo1.Controllers
                 fileName = fileName + extension;
                 p.Image = "~/Content/Image/" + fileName;
                 p.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Image/"), fileName));
+                
+
             }
+            int catid = Int32.Parse(Request.Form["CatList"].ToString());
+            p.CategoryID = catid;
             ctx.ProductMasters.Add(p);
             ctx.SaveChanges();
             return RedirectToAction("Index");
@@ -67,7 +73,9 @@ namespace Demo1.Controllers
         [AuthLog(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
-        if (id == null)
+            CategoryDbcontext db1 = new CategoryDbcontext();
+            ViewBag.CatList = new SelectList(db1.Category.ToList(), "CategoryID", "CategoryName");
+            if (id == null)
         {
             return RedirectToAction("Index");
         }
@@ -97,6 +105,8 @@ namespace Demo1.Controllers
                 p.Image = "~/Content/Image/" + fileName;
                 p.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Image/"), fileName));
             }
+            int catid = Int32.Parse(Request.Form["CatList"].ToString());
+            p.CategoryID = catid;
             ctx.Entry(p).State = EntityState.Modified;
             ctx.SaveChanges();
             return RedirectToAction("Index");
