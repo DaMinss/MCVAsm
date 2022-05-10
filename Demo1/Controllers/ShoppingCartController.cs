@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Demo1.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Demo1.CustomFilters;
+
 
 namespace Demo1.Controllers
 {
@@ -21,6 +24,7 @@ namespace Demo1.Controllers
             }
             return cart;
         }
+        [AuthLog(Roles = "Admin")]
         public ActionResult AddToCart(int? id)
         {
             var p = _db.ProductMasters.SingleOrDefault(s => s.BookId == id);
