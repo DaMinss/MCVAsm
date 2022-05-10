@@ -184,7 +184,6 @@ namespace Demo1.Controllers
         }
 
         //User register
-
         [AllowAnonymous]
         public ActionResult Register()
         {
@@ -198,7 +197,7 @@ namespace Demo1.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        
+        [AuthLog(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -224,6 +223,7 @@ namespace Demo1.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
 
 
 
