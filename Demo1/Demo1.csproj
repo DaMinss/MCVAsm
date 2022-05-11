@@ -189,6 +189,10 @@
     <Compile Include="Migrations\202205090804514_hello.designer.cs">
       <DependentUpon>202205090804514_hello.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205101647429_updatenew.cs" />
+    <Compile Include="Migrations\202205101647429_updatenew.designer.cs">
+      <DependentUpon>202205101647429_updatenew.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -269,13 +273,12 @@
     <Content Include="Views\Product\IndexUser.cshtml" />
     <Content Include="Views\Product\ProductDetail.cshtml" />
     <Content Include="Views\ShoppingCart\ShowToCart.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Cart\" />
     <Folder Include="Views\Search\" />
-    <Folder Include="Views\ViewProduct\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -296,6 +299,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202205090804514_hello.resx">
       <DependentUpon>202205090804514_hello.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205101647429_updatenew.resx">
+      <DependentUpon>202205101647429_updatenew.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

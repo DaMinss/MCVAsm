@@ -24,7 +24,7 @@ namespace Demo1.Controllers
             }
             return cart;
         }
-        [AuthLog(Roles = "Admin")]
+       [AllowAnonymous]
         public ActionResult AddToCart(int? id)
         {
             var p = _db.ProductMasters.SingleOrDefault(s => s.BookId == id);

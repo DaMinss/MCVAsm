@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Demo1.Models.RegisterViewModel>
+
+@{ ViewBag.Title = "Index"; }
+<h2>User list</h2>
+
+@using (Html.BeginForm("Index", "Account", FormMethod.Get))
+{
+    
+}
+<table class="table">
+    <tr>
+        <th>
+            Email
+        </th>
+        <th>
+            Password
+        </th>
+        <th>
+            Role
+        </th>
+       
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Email
+            </td>
+            <td>
+                @item.Password
+            </td>
+            <td>
+                @item.Name
+            </td>
+           
+            <td>
+               
+                @Html.ActionLink("Delete", "Delete", new { id = item.Email }, new { onclick = "return confirm('Are you sure you wish to delete this book?');" })
+            </td>
+        </tr>
+}
+
+</table>
+@Html.ActionLink("New Product", "Create", "Product") 

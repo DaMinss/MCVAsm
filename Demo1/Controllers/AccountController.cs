@@ -19,11 +19,17 @@ namespace Demo1.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         ApplicationDbContext context;
+        ApplicationDbContext db = new ApplicationDbContext();
 
 
         public AccountController()
         {
             context = new ApplicationDbContext();
+
+        }
+        public ActionResult Index(string search)
+        {
+            return View();
 
         }
 
@@ -143,7 +149,7 @@ namespace Demo1.Controllers
         //
         // GET: /Account/Register
 
-        [AuthLog(Roles = "Admin")]
+        [AllowAnonymous]
         public ActionResult RegisterAdmin()
         {
            
@@ -156,7 +162,7 @@ namespace Demo1.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AuthLog(Roles = "Admin")]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterAdmin(RegisterViewModel model) 
         {
@@ -184,46 +190,7 @@ namespace Demo1.Controllers
         }
 
         //User register
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-
-
-            ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
-            return View();
-
-        }
-
-        //
-        // POST: /Account/Register
-        [HttpPost]
-        [AuthLog(Roles = "Admin")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    //Assign Role to user Here 
-                    await this.UserManager.AddToRoleAsync(user.Id, model.Name);
-                    //Ends Here
-
-
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    return RedirectToAction("Index", "Home");
-
-                }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
+        
 
 
 

@@ -1,9 +1,9 @@
 ﻿@model Demo1.Models.RegisterViewModel
 @{
-    ViewBag.Title = "RegisterAdmin";
+    ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2 style="margin-top:3%">@ViewBag.Title</h2>
 
 @using (Html.BeginForm("RegisterAdmin", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -31,15 +31,14 @@
         </div>
     </div>
     <!--Select the Role Type for the User-->
-    if (ViewContext.HttpContext.User.IsInRole("Admin"))
-    {
+    
         <div class="form-group">
             @Html.Label("Select Your User Type", new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.DropDownList("Name", (IEnumerable<SelectListItem>)(@ViewBag.Name), new { @class = "form-control" })
             </div>
         </div>
-    }
+   
     <!--Ends Here-->
 
     <div class="form-group">

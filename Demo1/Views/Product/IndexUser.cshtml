@@ -4,6 +4,16 @@
 
 
 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Product Card/Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/css/ok.css" type="text/css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+</head>
 
 <!-- Header-->
 <header class="bg-dark py-5" style="margin-top:50px;">
@@ -19,7 +29,7 @@
             {
                 @Html.TextBox("search")
 
-                
+
                 <button type="submit" value="Search" class="searchButton">
                     Search
                 </button>
@@ -30,9 +40,9 @@
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5" style="margin-top:5%;">
-        
+
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-           
+
             @foreach (var item in Model)
             {
                 @*<div id="ok">*@
@@ -46,15 +56,17 @@
 
                         <div class="panel-body text-center">
                             <h4>
-                                <a href="#" class="pro-title">
+                                <a href="/Product/ProductDetail/@item.BookId" class="pro-title">
                                     @item.BookName
                                 </a>
                             </h4>
                             <p class="price">$@item.BookPrice</p>
                         </div>
-                        <button href="#" class="adtocart">
-                            <a href="/ShoppingCart/AddtoCart/@item.BookId">Add To Cart</a>
+                        <button onclick="window.location.href='/ShoppingCart/AddtoCart/@item.BookId'" class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
+                            <i class="fa fa-shopping-cart"></i>
+                            
                         </button>
+
                     </section>
                 </div>
 

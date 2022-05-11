@@ -38,6 +38,23 @@ namespace Demo1.Controllers
             return View(db.ProductMasters.Where(x => x.BookName.Contains(search) || search == null).ToList());
 
         }
+        [AllowAnonymous]
+        public ActionResult ProductDetail(int? id)
+        {
+            CategoryDbcontext db1 = new CategoryDbcontext();
+            ViewBag.CatList = new SelectList(db1.Category.ToList(), "CategoryID", "CategoryName");
+            if (id == null)
+            {
+                return RedirectToAction("IndexUser");
+            }
+            using (var ctx = new ProductDbContext())
+            {
+                var Product = ctx.ProductMasters.Find(id);
+                //find(id) will return null value if it can't find the requested if in the database
+               
+                return View(Product);
+            }
+        }
 
         [AuthLog(Roles = "Admin")]
         public ActionResult Create()
@@ -143,7 +160,7 @@ namespace Demo1.Controllers
             }
         }
 
-        [AuthLog(Roles = "Admin")]
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
